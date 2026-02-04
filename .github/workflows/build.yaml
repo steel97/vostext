@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  workflow_call:
+  push:
+    branches:
+      - main
+
+jobs:
+  firefox:
+    name: firefox extension
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install --global web-ext
+      - name: Build
+        run: |
+          npm run zip:firefox
+          mv .output/vostext-*-firefox.zip .output/vostext-firefox.unsigned.zip
+          mv .output/vostext-*-sources.zip .output/vostext-sources.zip
+          cd .output/firefox-mv2
+          web-ext sign --channel=unlisted --api-key=${{ secrets.FIREFOX_API_KEY }} --api-secret=${{ secrets.FIREFOX_API_SECRET }}
+          mv .output/firefox-mv2/web-ext-artifacts/*.xpi .output/vostext-firefox.xpi
+      - name: Upload
+        uses: actions/upload-artifact@v6
+        with:
+          name: firefox-extension
+          path: .output/*.zip
+            .output/*.xpi
