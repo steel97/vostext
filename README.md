@@ -1,6 +1,6 @@
 # VostExt - улучшение плеера animevost
 
-![VostExt](./docs/image.png)
+![VostExt](./docs/screenshot.png)
 
 - Автоматическое переключение серий
 - Авто выбор второго плеера
