@@ -24,11 +24,8 @@ jobs:
       - name: Build
         continue-on-error: true
         run: |
-          npm run zip
-          npm run zip:firefox
-          mv .output/vostext-*-chrome.zip .output/vostext-chrome.unsigned.zip
-          mv .output/vostext-*-firefox.zip .output/vostext-firefox.unsigned.zip
-          mv .output/vostext-*-sources.zip .output/vostext-sources.zip
+          npm run build
+          npm run build:firefox
           cd .output/firefox-mv2
           set +e
           web-ext sign --channel=unlisted --api-key=${{ secrets.FIREFOX_API_KEY }} --api-secret=${{ secrets.FIREFOX_API_SECRET }}
@@ -36,11 +33,10 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v6
         with:
-          name: zips
-          path: ./.output/*.zip
-            ./vostext/.output/*.xpi
-      - name: Firefox extension
+          name: vostext-chrome.unsigned
+          path: .output/chrome-mv3
+      - name: Upload extension (firfox)
         uses: actions/upload-artifact@v6
         with:
-          name: zips
-          path: ./.output/*.xpi
+          name: vostext-firefox
+          path: ./.output/vostext-firefox.xpi
