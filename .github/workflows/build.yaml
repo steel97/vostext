@@ -34,9 +34,9 @@ jobs:
           web-ext sign --channel=unlisted --api-key=${{ secrets.FIREFOX_API_KEY }} --api-secret=${{ secrets.FIREFOX_API_SECRET }}
           find .output/firefox-mv2/web-ext-artifacts -name "*.xpi" -exec mv {} .output/vostext-firefox.xpi \;
       - name: Upload
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: firefox-extension
           path: |
-            .output/*.zip
-            .output/*.xpi
+            ./.output/*.zip
+            ./.output/*.xpi
