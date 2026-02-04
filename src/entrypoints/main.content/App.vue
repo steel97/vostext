@@ -92,6 +92,13 @@ const checkEventSubscription = async () => {
     }
   });
 
+  player?.addEventListener("fullscreenchange", async (ev) => {
+    if (!document.fullscreenElement) {
+      console.log("manually exited full screen");
+      player.setAttribute("__vostnofs", "true");
+    }
+  });
+
   player?.addEventListener("ended", async (ev) => {
     browser.runtime.sendMessage("videoended");
     if (!autoNextEpisode.value) {
@@ -209,6 +216,10 @@ const watchPlayerState = async () => {
 
         if (pip.value && !video.hasAttribute("__vostpip")) {
           await enterPip(video, true);
+        }
+
+        if (fullscreen.value && !document.fullscreenElement && !video.hasAttribute("__vostnofs")) {
+          video.requestFullscreen();
         }
       }
     } catch {
