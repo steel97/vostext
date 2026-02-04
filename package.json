@@ -1,0 +1,38 @@
+{
+  "name": "vostext",
+  "description": "animevost.org website improvements",  
+  "version": "0.1.0",
+  "author": {
+    "name": "Ivan Yv",
+    "email": "support@steel-team.net"
+  },
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "compile": "vue-tsc --noEmit",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/ui": "^4.4.0",
+    "tailwindcss": "^4.1.18",
+    "vue": "^3.5.25"
+  },
+  "devDependencies": {
+    "@wxt-dev/module-vue": "^1.0.3",
+    "@vue/eslint-config-typescript": "^14.6.0",
+    "@vue/tsconfig": "^0.8.1",
+    "eslint": "^9.39.2",
+    "eslint-plugin-oxlint": "^1.41.0",
+    "eslint-plugin-vue": "^10.7.0",
+    "oxlint": "^1.41.0",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.8",
+    "wxt": "^0.20.6"
+  }
+}

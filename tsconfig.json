@@ -1,0 +1,30 @@
+{
+  "extends": "./.wxt/tsconfig.json",
+  "include": [
+    "types.d.ts",
+    "env.d.ts",
+    "./**/*",
+    "./.wxt/wxt.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "auto-imports.d.ts",
+    "components.d.ts"
+  ],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@": ["./src"],
+      "@/*": ["./src/*"],
+      "~": ["./src"],
+      "~/*": ["./src/*"],
+      "@@": ["."],
+      "@@/*": ["./*"],
+      "~~": ["."],
+      "~~/*": ["..*"],
+      "#build/ui/*": [
+        "./node_modules/.nuxt-ui/ui/*"
+      ]
+    }
+  }
+}
