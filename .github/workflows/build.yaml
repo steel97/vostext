@@ -20,17 +20,12 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-          npm install --global web-ext
       - name: Build
         continue-on-error: true
         run: |
           npm run build
-          npm run build:firefox
-          cd .output/firefox-mv2
-          set +e
-          web-ext sign --channel=unlisted --api-key=${{ secrets.FIREFOX_API_KEY }} --api-secret=${{ secrets.FIREFOX_API_SECRET }}
-          find .output/firefox-mv2/web-ext-artifacts -name "*.xpi" -exec mv {} .output/vostext-firefox.xpi \;
-      - name: Upload
+          npm run build:firefox          
+      - name: Upload extension (chrome)
         uses: actions/upload-artifact@v6
         with:
           name: vostext-chrome.unsigned
@@ -38,5 +33,5 @@ jobs:
       - name: Upload extension (firfox)
         uses: actions/upload-artifact@v6
         with:
-          name: vostext-firefox
-          path: ./.output/vostext-firefox.xpi
+          name: vostext-firefox.unsigned
+          path: .output/firefox-mv2

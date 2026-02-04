@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag name (without "v" prefix, ex. 1.0.0)'
+        default: '1.0.0'
+      draft:
+        description: 'Should new release be a draft?'
+        type: boolean
+        required: true
+        default: true
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yaml
+    secrets: inherit
+
+  create_release:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+      - name: Install dependencies
+        run: npm install --global web-ext
+      # chrome
+      - uses: actions/download-artifact@v6
+        with:
+          name: vostext-chrome.unsigned
+          path: './vostext-chrome.unsigned'
+      - run: |
+          rm -rf 'vostext-chrome.unsigned.zip'
+          zip -j -r 'vostext-chrome.unsigned.zip' './vostext-chrome.unsigned'
+      # firefox
+      - uses: actions/download-artifact@v6
+        with:
+          name: vostext-firefox.unsigned
+          path: './vostext-firefox.unsigned'
+      - run: |
+          cd ./vostext-firefox.unsigned
+          web-ext sign --channel=unlisted --api-key=${{ secrets.FIREFOX_API_KEY }} --api-secret=${{ secrets.FIREFOX_API_SECRET }}
+          find ./web-ext-artifacts -name "*.xpi" -exec mv {} ../vostext-firefox.xpi \;
+      # upload release
+      - uses: ncipollo/release-action@v1
+        with:
+          commit: 'main'
+          tag: 'v${{ inputs.tag }}'
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+          generateReleaseNotes: true
+          draft: '${{ inputs.draft }}'
+          name: 'vostext ${{ inputs.tag }}'
+          removeArtifacts: true
+          artifacts: '*.zip,*.xpi'
