@@ -1,6 +1,6 @@
 {
   "name": "vostext",
-  "description": "animevost.org website improvements",  
+  "description": "animevost.org website improvements",
   "version": "0.1.0",
   "author": {
     "name": "Ivan Yv",
@@ -21,12 +21,13 @@
   "dependencies": {
     "@nuxt/ui": "^4.4.0",
     "tailwindcss": "^4.1.18",
-    "vue": "^3.5.25"
+    "vue": "^3.5.25",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@wxt-dev/module-vue": "^1.0.3",
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.8.1",
+    "@wxt-dev/module-vue": "^1.0.3",
     "eslint": "^9.39.2",
     "eslint-plugin-oxlint": "^1.41.0",
     "eslint-plugin-vue": "^10.7.0",
