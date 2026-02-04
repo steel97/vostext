@@ -36,7 +36,11 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v6
         with:
-          name: firefox-extension
-          path: |
-            ./vostext/.output/*.zip
+          name: zips
+          path: ./.output/*.zip
             ./vostext/.output/*.xpi
+      - name: Firefox extension
+        uses: actions/upload-artifact@v6
+        with:
+          name: zips
+          path: ./.output/*.xpi
